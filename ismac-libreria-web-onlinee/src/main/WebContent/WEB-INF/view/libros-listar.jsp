@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,10 @@
 </head>
 <body>
 	<h1>Libros</h1>
+	
+	<button onclick="window.location.href='/ismac-libreria-web-onlinee/libros/findOne?opcion=1'; return false;">
+		Agregar
+    </button>
  
 	<table>
 		<thead>
@@ -55,10 +60,10 @@
 					<td>${item.autor}</td>
 		
 					<td>
-					 	<button >
+					  <button onclick="window.location.href='/ismac-libreria-web-onlinee/libros/findOne?idlibro=${item.idLibro}&opcion=1'; return false;">
 					 		Actualizar
 					 	</button>
-					 	<button >
+					 	<button onclick="window.location.href='/ismac-libreria-web-onlinee/libros/findOne?idlibro=${item.idLibro}&opcion=2'; return false;">
 					 		Eliminar
 					 	</button>
 					</td>

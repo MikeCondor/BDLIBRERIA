@@ -11,7 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
- 
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
  
 @Component
@@ -34,6 +35,7 @@ public class Libro {
 	private String edicion;
 	@Column(name = "idioma")
 	private String idioma;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "fecha_publicacion")
 	private Date fechaPublicacion;
 	@Column(name = "descripcion")

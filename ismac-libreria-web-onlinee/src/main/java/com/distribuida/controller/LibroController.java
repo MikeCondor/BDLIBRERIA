@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
  
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,33 +21,41 @@ import com.distribuida.entities.Libro;
 @Controller
 @RequestMapping("/libros")
 public class LibroController {
- 
+
 	@Autowired
 	private LibroDAO libroDAO;
+	
 	@Autowired
 	private CategoriaDAO categoriaDAO;
+	
 	@Autowired
 	private AutorDAO autorDAO;
+	
 	@GetMapping("/findAll")
 	private String findAll(ModelMap modelMap) {
 		List<Libro> libros = libroDAO.findALL();
 		modelMap.addAttribute("libros", libros);
 		return "libros-listar";
 	}
+	
 	@GetMapping("/findOne") //Actualizar o eliminar
 	private String findOne(@RequestParam("idLibro") @Nullable Integer idLibro
 						  ,@RequestParam("opcion") @Nullable Integer opcion
 						  ,ModelMap modelMap
 			) {
+		
 		if (idLibro != null) {
 			Libro libro = libroDAO.findOne(idLibro);
 			modelMap.addAttribute("libro", libro);
 		}
+		
 		modelMap.addAttribute("autores", autorDAO.findALL());
 		modelMap.addAttribute("categorias", categoriaDAO.findALL());
-		if(opcion == 1) return "add-libros";
+		
+		if(opcion == 1) return "libros-add";
 		else return "del-libros";
 	}
+	
 	@PostMapping("/add")
 	private String add(@RequestParam("idLibro") @Nullable Integer idLibro
 					  ,@RequestParam("titulo") @Nullable String titulo
@@ -54,7 +63,7 @@ public class LibroController {
 					  , @RequestParam("numPaginas")@Nullable Integer numPaginas
 					  , @RequestParam("edicion")@Nullable String edicion
 					  , @RequestParam("idioma")@Nullable String idioma
-				      , @RequestParam("fechaPublicacion")@Nullable Date fechaPublicacion
+				      , @RequestParam("fechaPublicacion")@Nullable @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaPublicacion
 					  , @RequestParam("descripcion")@Nullable String descripcion
 					  , @RequestParam("tipoPasta")@Nullable String tipoPasta
 					  , @RequestParam("ISBN")@Nullable String ISBN
@@ -62,26 +71,30 @@ public class LibroController {
 					  , @RequestParam("portada")@Nullable String portada
 					  , @RequestParam("presentacion")@Nullable String presentacion
 					  , @RequestParam("precio")@Nullable Double precio
-					  , @RequestParam("id_Categoria")@Nullable Integer id_categoria
-					  , @RequestParam("id_Autor")@Nullable Integer id_autor
+					  , @RequestParam("idCategoria")@Nullable Integer id_categoria
+					  , @RequestParam("idAutor")@Nullable Integer id_autor
 					  ,ModelMap modelMap
 			) {
+		
 		if(idLibro == null) {
 			Libro libro = new Libro(0, titulo, editorial, numPaginas, edicion, idioma, fechaPublicacion, descripcion, tipoPasta, ISBN, numEjemplares, portada, presentacion, precio);
 			libro.setCategoria(categoriaDAO.findOne(id_categoria));
 			libro.setAutor(autorDAO.findOne(id_autor));
+			
 			libroDAO.add(libro);
 		}else {
 			Libro libro = new Libro(idLibro, titulo, editorial, numPaginas, edicion, idioma, fechaPublicacion, descripcion, tipoPasta, ISBN, numEjemplares, portada, presentacion, precio);
 			libro.setCategoria(categoriaDAO.findOne(id_categoria));
 			libro.setAutor(autorDAO.findOne(id_autor));
+			
 			libroDAO.add(libro);
 		}		
-		return "redirect:/libros/listar-libros";
-	}
+		return "redirect:/libros/findAll";
+		}
+	
 	@GetMapping("/del")
 	public String dell(@RequestParam("idLibro") @Nullable Integer idLibro) {
 		libroDAO.dell(idLibro);
-		return "redirect:/libros/libros-listar";
+		return "redirect:/libros/findAll";
 	}
 }
