@@ -54,7 +54,7 @@
 	Categoria
 	<select id="idCategoria" name="idCategoria">
 	
-		<c:forEach var="item" items="${categorias }">
+		<c:forEach var="item" items="${categorias}">
 			<option value="${item.idCategoria}" ${item.idCategoria == libro.categoria.idCategoria ?'selected' : ''  }> ${item.categoria}</option>
 		</c:forEach> 
 		</select>

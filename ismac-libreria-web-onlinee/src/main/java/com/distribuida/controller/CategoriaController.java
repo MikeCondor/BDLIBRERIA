@@ -58,7 +58,7 @@ public class CategoriaController {
 
 	@GetMapping("/del")
 	public String del(@RequestParam("idCategoria") @Nullable Integer idCategoria) {
-		categoriaDAO.del(idCategoria);
+		categoriaDAO.dell(idCategoria);
 		return "redirect:/categorias/findAll";
 	}
 }

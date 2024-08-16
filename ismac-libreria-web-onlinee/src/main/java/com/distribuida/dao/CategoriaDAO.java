@@ -14,7 +14,5 @@ public List<Categoria> findALL();
 	
 	public void up (Categoria categoria);
 	
-	public void del (Integer idCategoria);
-
-	void del(Categoria cliente);
+	void dell(int id);
 }
