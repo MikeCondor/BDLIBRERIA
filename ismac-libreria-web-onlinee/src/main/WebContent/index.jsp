@@ -3,10 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+	<meta charset="ISO-8859-1">
+	<title>Gestión de libreria </title>
+	
+	<link rel= "stylesheet" href="${pageContext.request.contextPath }/resources/css/estilos1.css" />
+
+
+
 </head>
 <body>
-	<h1>A sebas le gustan los hombres</h1>
+	<h1>LIBRERIA WEB</h1>
 </body>
 </html>
